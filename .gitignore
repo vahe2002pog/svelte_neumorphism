@@ -1,0 +1,8 @@
+/node_modules/
+/public/build/
+
+.DS_Store
+package-lock.json
+.vscode/
+public/global.css
+public/favicon.png
