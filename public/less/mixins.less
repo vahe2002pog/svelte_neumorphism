@@ -1,0 +1,28 @@
+//main: ../global.less
+
+.neumorphism-background(@flat: "true";
+    @pressed: "false";
+    @concave: "false";
+    @convex: "false";
+    @background: @background-color;
+    @radius: @border-radius;
+
+) {
+    background:
+        if(@concave ="true",
+            linear-gradient(145deg, darken(@background, 9%), lighten(@background, 6.25%)),
+            if(@convex ="true",
+                linear-gradient(145deg, lighten(@background, 6.25%), darken(@background, 9%)),
+                @background));
+    border-radius: @radius;
+}
+
+.neumorphism-shadow-outset(@distance: 5px; @blur: 8px; @blackout: 25.5%; @lightening: 15%; @color: @background-color; ) {
+    box-shadow+: @distance @distance @blur darken(@color, @blackout),
+        -@distance -@distance @blur lighten(@color, @lightening);
+}
+
+.neumorphism-shadow-inset(@distance: 5px; @blur: 8px; @blackout: 25.5%; @lightening: 15%; @color: @background-color; ) {
+    box-shadow+: inset @distance @distance @blur darken(@color, @blackout),
+        inset -@distance -@distance @blur lighten(@color, @lightening);
+}

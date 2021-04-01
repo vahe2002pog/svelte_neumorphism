@@ -1,4 +1,6 @@
 @import "less/varibles";
+@import "less/mixins";
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
 
 html,
 body {
@@ -10,27 +12,19 @@ body {
     font-family: @font-name;
 }
 
-svg{
-    fill: @font-color!important;
-}
-
-.neumorphism(@distance: 5px; @blur: 8px;
-    @blackout: 25.5%; @lightening: 15%;
-    @flat: "false"; @pressed: "false"; @concave: "false"; @convex: "false";
-
-    @background: @background-color; @radius: @border-radius) {
-
-    background: if(@concave ="true", linear-gradient(145deg, darken(@background, 9%), lighten(@background, 6.25%)), if(@convex ="true", linear-gradient(145deg, lighten(@background, 6.25%), darken(@background, 9%)), @background));
-    border-radius: @radius;
-    box-shadow: if(@flat ="true", @distance @distance @blur darken(@background, @blackout) ~","
-            -@distance -@distance @blur lighten(@background, @lightening)) if(@flat ="true", if(@pressed ="true", ~",")) if(@pressed ="true", inset @distance @distance @blur darken(@background, @blackout) ~","
-            inset -@distance -@distance @blur lighten(@background, @lightening));
+svg {
+    fill: @font-color !important;
 }
 
 .selectGroup {
     width: min-content;
     min-width: 250px;
     margin: 5px;
+}
+
+.neumorphism-element {
+    .neumorphism-background;
+    .neumorphism-shadow-outset;
 }
 
 .pointer {
@@ -49,7 +43,8 @@ svg{
 hr {
     border: none;
     margin: 0;
-    .neumorphism(1px, 2px, @pressed: "true")
+    .neumorphism-background(@pressed: "true");
+    .neumorphism-shadow-inset(1px, 2px);
 }
 
 a {
@@ -63,5 +58,29 @@ a {
 
     &:hover {
         opacity: 0.5;
+    }
+}
+
+* ::-webkit-scrollbar {
+    width: 10px;
+    &-track {
+        background: transparent;
+    }
+    &-thumb {
+        border: 2px solid rgba(0, 0, 0, 0);
+        background-clip: padding-box;
+        .neumorphism-background(@pressed: "true", @background: transparent, @radius: 10px);
+        .neumorphism-shadow-inset(3px, 6px, 5%,  @color: @accent-color);
+    }
+    &-track-piece{
+        &:end {
+            background: transparent;
+            margin-bottom: 10px;
+        }
+
+        &:start {
+            background: transparent;
+            margin-top: 10px;
+        }
     }
 }

@@ -32,19 +32,51 @@
     }
 </script>
 
+<div class="select-container">
+    <div
+        class="select {$$props.class} unselectable neumorphism-element"
+        use:clickOutside
+        on:click_outside={opened
+            ? (e) => selectArrowClick((e, true))
+            : () => {}}
+    >
+        <div class="header">
+            <div class="header-text">
+                {#if chosenItem}
+                    <a href={chosenItem.groupURL} target="_blank">
+                        {chosenItem.name}
+                    </a>
+                {:else}
+                    <div>{header}</div>
+                {/if}
+            </div>
+            <div
+                class={(opened ? "rotate " : "") + "icon pointer"}
+                on:click={selectArrowClick}
+            >
+                <Icon path={mdiChevronDown} />
+            </div>
+        </div>
+        <div class="options">
+            {#each items as item}
+                <hr size="5" />
+                <div class="item pointer" on:click={() => optionClick(item)}>
+                    <img src={item.imageURL} alt="" />
+                    <div>{item.name}</div>
+                </div>
+            {/each}
+        </div>
+    </div>
+</div>
+
 <style lang="less">
     @import "../public/less/varibles";
-    @import "../public/global";
     .select-container {
         position: relative;
-        & *{
-            .unselectable;
-        }
         & .select {
             position: absolute;
             background-color: @background-color;
             overflow: hidden;
-            .neumorphism(@flat: "true");
             & .header {
                 display: flex;
                 padding: 2px;
@@ -95,38 +127,3 @@
         }
     }
 </style>
-
-<div class="select-container">
-    <div
-        class="select {$$props.class}"
-        use:clickOutside
-        on:click_outside={opened ? () => selectArrowClick((close = true)) : () => {}}>
-        <div class="header">
-            <div class="header-text">
-                {#if chosenItem}
-                    <a href={chosenItem.groupURL} target="_blank">
-                        {chosenItem.name}
-                    </a>
-                {:else}
-                    <div>{header}</div>
-                {/if}
-            </div>
-            <div
-                class={(opened ? 'rotate ' : '') + 'icon pointer'}
-                on:click={selectArrowClick}>
-                <Icon path={mdiChevronDown} />
-            </div>
-        </div>
-        <div class="options">
-            {#each items as item}
-                <hr size="5" />
-                <div
-                    class="item pointer"
-                    on:click={() => optionClick(item)}>
-                    <img src={item.imageURL} alt="" />
-                    <div>{item.name}</div>
-                </div>
-            {/each}
-        </div>
-    </div>
-</div>
