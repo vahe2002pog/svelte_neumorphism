@@ -1,6 +1,10 @@
-@import "less/varibles";
+@import "less/variables";
 @import "less/mixins";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+*{
+    font-family: @font-name;
+}
 
 html,
 body {
@@ -9,7 +13,6 @@ body {
     padding: 0;
     margin: 0;
     background-color: @background-color;
-    font-family: @font-name;
 }
 
 svg {
@@ -19,7 +22,7 @@ svg {
 .selectGroup {
     width: min-content;
     min-width: 250px;
-    margin: 5px;
+    margin: 10px;
 }
 
 .neumorphism-element {
@@ -43,8 +46,11 @@ svg {
 hr {
     border: none;
     margin: 0;
-    .neumorphism-background(@pressed: "true");
+    .neumorphism-background;
     .neumorphism-shadow-inset(1px, 2px);
+    &.none-rounded{
+        .neumorphism-background(@radius: 0px);
+    }
 }
 
 a {
@@ -69,7 +75,7 @@ a {
     &-thumb {
         border: 2px solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
-        .neumorphism-background(@pressed: "true", @background: transparent, @radius: 10px);
+        .neumorphism-background(@background: transparent, @radius: 10px);
         .neumorphism-shadow-inset(3px, 6px, 5%,  @color: @accent-color);
     }
     &-track-piece{
@@ -84,3 +90,69 @@ a {
         }
     }
 }
+
+input[type=text], input[type=number], textarea {
+    .neumorphism-background;
+    .neumorphism-shadow-inset(3px, 5px);
+    border: none;
+    padding: 8px;
+    padding-left: 10px;
+    &::placeholder {
+        color: lighten(@font-color, 20%);
+        .unselectable;
+    }
+}
+
+textarea {
+    resize: none;
+    white-space: normal!important;
+    cursor: auto;
+}
+
+input:focus, textarea:focus, button:focus, select:focus {
+    outline: none;
+}
+
+// .slider-track{
+//     width: 100%;
+//     height: 8px;
+//     cursor: pointer;
+//     transition: 0.2s;
+//     .neumorphism-background();
+//     .neumorphism-shadow-inset(2px, 3px);
+//     // .neumorphism-shadow-outset(2px, 3px);
+// }
+
+// .slider-thumb{
+//     height: 16px;
+//     width: 16px;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     .neumorphism-background(@background: @accent-color);
+//     .neumorphism-shadow-outset(2px, 3px);
+//     -webkit-appearance: none;
+//     margin-top: -4px;
+// }
+
+// input[type=range] {
+//     -webkit-appearance: none;
+//     background: transparent;
+//     &:focus {
+//         outline: none;
+//     }
+//     &::-webkit-slider-runnable-track{
+//        .slider-track;
+//     }
+//     &::-webkit-slider-runnable-track{
+//        .slider-track;
+//     }
+//     &::-moz-range-track {
+//         .slider-track;
+//     }
+//     &::-webkit-slider-thumb{
+//         .slider-thumb;
+//     }
+//     &::-moz-range-thumb {
+//         .slider-thumb;
+//     }
+// }

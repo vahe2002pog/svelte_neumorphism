@@ -6,6 +6,7 @@
     export let items = [];
     let chosenItem = undefined;
     let opened = false;
+    let selectWidth;
 
     function selectArrowClick(e, close = false) {
         if (close) {
@@ -30,49 +31,18 @@
         chosenItem = item;
         selectArrowClick((close = true));
     }
+
+    setTimeout(() => {
+        selectWidth =
+            document.querySelector(".select")?.offsetWidth + 20 + "px";
+    }, 1);
 </script>
 
-<div class="select-container">
-    <div
-        class="select {$$props.class} unselectable neumorphism-element"
-        use:clickOutside
-        on:click_outside={opened
-            ? (e) => selectArrowClick((e, true))
-            : () => {}}
-    >
-        <div class="header">
-            <div class="header-text">
-                {#if chosenItem}
-                    <a href={chosenItem.groupURL} target="_blank">
-                        {chosenItem.name}
-                    </a>
-                {:else}
-                    <div>{header}</div>
-                {/if}
-            </div>
-            <div
-                class={(opened ? "rotate " : "") + "icon pointer"}
-                on:click={selectArrowClick}
-            >
-                <Icon path={mdiChevronDown} />
-            </div>
-        </div>
-        <div class="options">
-            {#each items as item}
-                <hr size="5" />
-                <div class="item pointer" on:click={() => optionClick(item)}>
-                    <img src={item.imageURL} alt="" />
-                    <div>{item.name}</div>
-                </div>
-            {/each}
-        </div>
-    </div>
-</div>
-
 <style lang="less">
-    @import "../public/less/varibles";
+    @import "../public/less/variables";
     .select-container {
         position: relative;
+        height: 54px;
         & .select {
             position: absolute;
             background-color: @background-color;
@@ -127,3 +97,36 @@
         }
     }
 </style>
+
+<div class="select-container" style="width: {selectWidth};">
+    <div
+        class="select {$$props.class} unselectable neumorphism-element"
+        use:clickOutside
+        on:click_outside={opened ? (e) => selectArrowClick((e, true)) : () => {}}>
+        <div class="header">
+            <div class="header-text">
+                {#if chosenItem}
+                    <a href={chosenItem.groupURL} target="_blank">
+                        {chosenItem.name}
+                    </a>
+                {:else}
+                    <div>{header}</div>
+                {/if}
+            </div>
+            <div
+                class={(opened ? 'rotate ' : '') + 'icon pointer'}
+                on:click={selectArrowClick}>
+                <Icon path={mdiChevronDown} />
+            </div>
+        </div>
+        <div class="options">
+            {#each items as item}
+                <hr size="5" class="none-rounded" />
+                <div class="item pointer" on:click={() => optionClick(item)}>
+                    <img src={item.imageURL} alt="" />
+                    <div>{item.name}</div>
+                </div>
+            {/each}
+        </div>
+    </div>
+</div>
