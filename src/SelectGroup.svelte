@@ -2,11 +2,20 @@
     import Icon from "mdi-svelte";
     import { clickOutside } from "./scripts/clickOutside.js";
     import { mdiChevronDown } from "@mdi/js";
+    import { randString } from './functions'
     export let header = "";
     export let items = [];
     let chosenItem = undefined;
     let opened = false;
     let selectWidth;
+    let localClass;
+    while (true) {
+        let tempClass = "component-" + randString(5);
+        if (document.getElementsByClassName(tempClass).length === 0) {
+            localClass = tempClass;
+            break;
+        }
+    }
 
     function selectArrowClick(e, close = false) {
         if (close) {
@@ -14,7 +23,7 @@
         } else {
             opened = !opened;
         }
-        let options = document.querySelector(".options");
+        let options = document.querySelector(`.${localClass} .options`);
         if (opened) {
             options.style.height = "min-content";
             let height = options.offsetHeight + "px";
@@ -34,7 +43,7 @@
 
     setTimeout(() => {
         selectWidth =
-            document.querySelector(".select")?.offsetWidth + 20 + "px";
+            document.getElementsByClassName(localClass)[0]?.offsetWidth + 20 + "px";
     }, 1);
 </script>
 
@@ -100,7 +109,7 @@
 
 <div class="select-container" style="width: {selectWidth};">
     <div
-        class="select {$$props.class} unselectable neumorphism-element"
+        class="select {$$props.class} {localClass} unselectable neumorphism-element"
         use:clickOutside
         on:click_outside={opened ? (e) => selectArrowClick((e, true)) : () => {}}>
         <div class="header">
