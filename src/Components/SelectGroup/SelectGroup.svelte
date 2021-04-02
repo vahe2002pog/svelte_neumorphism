@@ -1,8 +1,8 @@
 <script>
     import Icon from "mdi-svelte";
-    import { clickOutside } from "./scripts/clickOutside.js";
+    import { clickOutside } from "../../scripts/clickOutside.js";
     import { mdiChevronDown } from "@mdi/js";
-    import { randString } from './functions'
+    import { randString } from "../../scripts/functions";
     export let header = "";
     export let items = [];
     let chosenItem = undefined;
@@ -10,7 +10,7 @@
     let selectWidth;
     let localClass;
     while (true) {
-        let tempClass = "component-" + randString(5);
+        let tempClass = "select-" + randString(5);
         if (document.getElementsByClassName(tempClass).length === 0) {
             localClass = tempClass;
             break;
@@ -43,73 +43,19 @@
 
     setTimeout(() => {
         selectWidth =
-            document.getElementsByClassName(localClass)[0]?.offsetWidth + 20 + "px";
+            document.getElementsByClassName(localClass)[0]?.offsetWidth +
+            20 +
+            "px";
     }, 1);
 </script>
 
-<style lang="less">
-    @import "../public/less/variables";
-    .select-container {
-        position: relative;
-        height: 54px;
-        & .select {
-            position: absolute;
-            background-color: @background-color;
-            overflow: hidden;
-            & .header {
-                display: flex;
-                padding: 2px;
-                justify-content: space-between;
-                align-items: center;
-                height: 30px;
-                flex-wrap: nowrap;
-
-                & .header-text {
-                    flex-grow: 1;
-                    margin-left: 15px;
-                    font-size: small;
-                }
-
-                & .icon {
-                    margin-left: 10px;
-                    margin-right: 5px;
-                    transition: 0.3s;
-                    transform: rotate(0deg);
-                    &.rotate {
-                        transform: rotate(180deg);
-                    }
-                }
-            }
-            & .options {
-                overflow: hidden;
-                transition: 0.3s;
-                height: 0px;
-                & .item {
-                    display: flex;
-                    align-items: center;
-                    padding: 5px 10px;
-                    height: 32px;
-                    &:hover {
-                        background-color: darken(@background-color, 3%);
-                    }
-                    &:active {
-                        background-color: darken(@background-color, 5%);
-                    }
-                    & img {
-                        height: 100%;
-                        margin-right: 10px;
-                        border-radius: 16px;
-                        object-fit: cover;
-                    }
-                }
-            }
-        }
-    }
+<style lang="less" global>
+    @import "SelectGroup.less";
 </style>
 
 <div class="select-container" style="width: {selectWidth};">
     <div
-        class="select {$$props.class} {localClass} unselectable neumorphism-element"
+        class="select {localClass} unselectable neumorphism-element {$$props.class ? $$props.class : ""}"
         use:clickOutside
         on:click_outside={opened ? (e) => selectArrowClick((e, true)) : () => {}}>
         <div class="header">

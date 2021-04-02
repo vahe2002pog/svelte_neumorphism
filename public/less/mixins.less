@@ -16,12 +16,23 @@
         border-radius: @radius;
 }
 
-.neumorphism-shadow-outset(@distance: 5px; @blur: 8px; @blackout: 25.5%; @lightening: 15%; @color: @background-color; ) {
+.neumorphism-shadow-outset(@distance: 5px; @blur: 8px; @blackout: 25.5%; @lightening: 15%; @color: @background-color; @delta: 0px;) {
+    @delta-distance: @delta - @distance;
     box-shadow+: @distance @distance @blur darken(@color, @blackout),
-        -@distance -@distance @blur lighten(@color, @lightening);
+        @delta-distance @delta-distance @blur lighten(@color, @lightening);
 }
 
-.neumorphism-shadow-inset(@distance: 5px; @blur: 8px; @blackout: 25.5%; @lightening: 15%; @color: @background-color; ) {
+.neumorphism-shadow-inset(@distance: 5px; @blur: 8px; @blackout: 25.5%; @lightening: 15%; @color: @background-color; @delta: 0px;) {
+    @delta-distance: @delta - @distance;
     box-shadow+: inset @distance @distance @blur darken(@color, @blackout),
-        inset -@distance -@distance @blur lighten(@color, @lightening);
+        inset @delta-distance @delta-distance @blur lighten(@color, @lightening);
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

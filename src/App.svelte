@@ -1,21 +1,11 @@
 <script>
-    import SelectGroup from "./SelectGroup.svelte";
+    import SelectGroup from "./Components/SelectGroup/SelectGroup.svelte";
+    import RangeSlider from "./Components/RangeSlider/RangeSlider.svelte";
+    let value = 5;
     let items = [
         {
             imageURL: "https://picsum.photos/200",
             name: "Group1",
-            groupURL: "https://music.youtube.com/",
-        },
-        {
-            imageURL: "https://picsum.photos/200?1",
-            name: "Group2",
-            groupURL: "https://www.reddit.com/",
-        },
-    ];
-    let items2 = [
-        {
-            imageURL: "https://picsum.photos/200",
-            name: "Groudasdasdasdasdasdasdadasdasdasp1",
             groupURL: "https://music.youtube.com/",
         },
         {
@@ -35,10 +25,8 @@
 <main>
     <div style="width: 100px; height: 100px;" />
     <SelectGroup class="selectGroup" header="Выберите сообщество" {items} />
-    <SelectGroup class="selectGroup" header="Выберите сообщество" items={items2} />
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <!-- <input type="text" placeholder="ABOBA" /> -->
-        <!-- <textarea placeholder="ABOBA" rows="1"/> -->
-        <!-- <input type="range" style="margin: 10px"> -->
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction:column;">
+        <RangeSlider bind:value={value} min="0" max="10" step="0.01"></RangeSlider>
+        {value}
     </div>
 </main>

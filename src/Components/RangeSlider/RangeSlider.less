@@ -1,0 +1,48 @@
+// out: false
+@import "../../../public/less/variables";
+@import "../../../public/less/mixins";
+
+.range-container {
+    .unselectable;
+    width: 100%;
+    min-width: 120px;
+    height: 16px;
+    & .track {
+        position: relative;
+        width: 100%;
+        height: 8px;
+        cursor: pointer;
+        .neumorphism-background;
+        .neumorphism-shadow-inset(2px, 3px, 20%);
+        margin-top: 4px;
+    }
+
+    & .progress {
+        position: absolute;
+        width: 100%;
+        height: 8px;
+        cursor: pointer;
+        .neumorphism-background(@convex: "true";@background: @accent-color);
+    }
+
+    & .thumb {
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        cursor: pointer;
+        .neumorphism-background(@convex: "true");
+        .neumorphism-shadow-outset(2px, 2px, @delta: 2px);
+        -webkit-appearance: none;
+        margin-top: -4px;
+        & div{
+            height: 8px;
+            width: 8px;
+            cursor: pointer;
+            @lighten: lighten(@accent-color, 5%);
+            .neumorphism-background(@background: @lighten);
+            .neumorphism-shadow-inset(1px, 2px, 15%, @color: @lighten);
+            -webkit-appearance: none;
+            margin: 4px;
+        }
+    }
+}
