@@ -1,7 +1,10 @@
 <script>
     import SelectGroup from "./Components/SelectGroup/SelectGroup.svelte";
     import RangeSlider from "./Components/RangeSlider/RangeSlider.svelte";
-    let value = 5;
+    import Button from "./Components/Button/Button.svelte";
+    import { mdiInstagram } from "@mdi/js";
+
+    let value = 50;
     let items = [
         {
             imageURL: "https://picsum.photos/200",
@@ -19,14 +22,21 @@
 <style lang="less">
     main {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
 <main>
-    <div style="width: 100px; height: 100px;" />
     <SelectGroup class="selectGroup" header="Выберите сообщество" {items} />
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction:column;">
-        <RangeSlider bind:value={value} min="0" max="10" step="0.01"></RangeSlider>
-        {value}
-    </div>
+    <RangeSlider thumb controls bind:value min="0" max="100" step="1" />
+    {value}
+    <Button path={mdiInstagram} size="x-small" right>ABOBA</Button>
+    <Button path={mdiInstagram} size="small" right>ABOBA</Button>
+    <Button path={mdiInstagram} size="normal" right>ABOBA</Button>
+    <Button path={mdiInstagram} size="large" right>ABOBA</Button>
+    <Button path={mdiInstagram} size="x-large" right>ABOBA</Button>
+    <input type="text" placeholder="Текстовое поле" style="width:250px">
+    <textarea rows="4" style="width:250px" placeholder="Многострочное текстовое поле" ></textarea>
 </main>

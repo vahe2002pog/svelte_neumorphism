@@ -4,6 +4,8 @@
 
 *{
     font-family: @font-name;
+    color: @font-color;
+    font-weight: 600;
 }
 
 html,
@@ -23,15 +25,6 @@ svg {
     width: min-content;
     min-width: 250px;
     margin: 10px;
-}
-
-.neumorphism-element {
-    .neumorphism-background;
-    .neumorphism-shadow-outset;
-}
-
-.pointer {
-    cursor: pointer;
 }
 
 hr {
@@ -83,13 +76,14 @@ a {
 }
 
 input[type=text], input[type=number], textarea {
+    margin: 5px 10px;
     .neumorphism-background;
     .neumorphism-shadow-inset(3px, 5px);
-    border: none;
+    .neumorphism-border;
     padding: 8px;
-    padding-left: 10px;
+    padding-left: 15px;
     &::placeholder {
-        color: lighten(@font-color, 20%);
+        color: rgba(@font-color, 0.5);
         .unselectable;
     }
 }

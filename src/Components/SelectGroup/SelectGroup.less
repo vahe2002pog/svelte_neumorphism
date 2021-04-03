@@ -1,6 +1,7 @@
 // out: false
 
 @import "../../../public/less/variables";
+@import "../../../public/less/mixins";
 
 .select-container {
     position: relative;
@@ -9,6 +10,9 @@
         position: absolute;
         background-color: @background-color;
         overflow: hidden;
+        z-index: 10;
+        .unselectable; 
+        .neumorphism-element;
     }
 
     & .header {
