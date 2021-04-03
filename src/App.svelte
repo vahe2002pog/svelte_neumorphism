@@ -2,8 +2,10 @@
     import SelectGroup from "./Components/SelectGroup/SelectGroup.svelte";
     import RangeSlider from "./Components/RangeSlider/RangeSlider.svelte";
     import Button from "./Components/Button/Button.svelte";
+    import Switch from "./Components/Switch/Switch.svelte";
     import { mdiInstagram } from "@mdi/js";
 
+    let checked = true;
     let value = 50;
     let items = [
         {
@@ -31,7 +33,8 @@
 <main>
     <SelectGroup class="selectGroup" header="Выберите сообщество" {items} />
     <RangeSlider thumb controls bind:value min="0" max="100" step="1" />
-    {value}
+    {checked? value: "Значение слайдера не будет отображаться!"}
+    <Switch bind:checked/> <br>
     <Button path={mdiInstagram} size="x-small" right>ABOBA</Button>
     <Button path={mdiInstagram} size="small" right>ABOBA</Button>
     <Button path={mdiInstagram} size="normal" right>ABOBA</Button>
