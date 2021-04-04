@@ -2,23 +2,30 @@
     import { randString } from "../../scripts/functions";
     import Button from "../Button/Button.svelte";
     import { mdiPlus, mdiMinus } from "@mdi/js";
+    import { getEventsAction } from "../../scripts/utils.js";
+    import { current_component } from "svelte/internal";
+    import { createEventDispatcher } from "svelte";
 
-    let localClass;
+    const dispatch = createEventDispatcher();
+    const events = getEventsAction(current_component);
+
     export let max;
     export let min;
     export let step;
     export let value;
     export let controls = false;
     export let thumb;
+    let localClass;
     let fixSize;
     let valPercent;
-    normalizeTypes();
-    $: valPercent = (value / (max - min)) * 100;
     let isCaught = false;
     let container;
     let interval;
     let timeout;
     let thumbHeight = 0;
+
+    $: valPercent = (value / (max - min)) * 100;
+    normalizeTypes();
 
     while (true) {
         let tempClass = "range-" + randString(5);
@@ -26,12 +33,35 @@
             localClass = tempClass;
             setTimeout(() => {
                 container = document.querySelector(`.${localClass}`);
-                if(thumb){
-                    thumbHeight = container.getElementsByClassName("thumb")[0].offsetHeight;
+                if (thumb) {
+                    thumbHeight = container.getElementsByClassName("thumb")[0]
+                        .offsetHeight;
                 }
             }, 0);
             break;
         }
+    }
+
+    function getValidValue(val) {
+        if(!isNaN(val)){
+            val = parseFloat(val.toFixed(fixSize))
+            if (val > max) {
+                return max;
+            } else if (val < min) {
+                return min;
+            } else {
+                return val;
+            }
+        }
+        else{
+            return NaN;
+        }
+    }
+
+    function setValue(val) {
+        let pastValue = value;
+        value = getValidValue(val);
+        dispatch('change', {value, pastValue, class: localClass});
     }
 
     function normalizeTypes() {
@@ -54,12 +84,12 @@
 
     function thumbCaught(event) {
         isCaught = true;
-        value = calcValue(event.x);
+        setValue(calcValue(event.x));
     }
 
     function thumbDragging(event) {
         if (event.buttons === 1 && isCaught) {
-            value = calcValue(event.x);
+            setValue(calcValue(event.x));
         }
     }
 
@@ -71,7 +101,7 @@
     }
 
     function calcValue(x) {
-        let containerX = container.getBoundingClientRect().x + (thumbHeight / 2);
+        let containerX = container.getBoundingClientRect().x + thumbHeight / 2;
         let width = container.offsetWidth - thumbHeight;
         if (x < containerX) {
             return min;
@@ -89,42 +119,23 @@
             tempValue = (Math.floor(floatValue / step) + 1) * step;
         }
 
-        tempValue = parseFloat(tempValue.toFixed(fixSize));
-
-        if (tempValue > max) {
-            return max;
-        } else if (tempValue < min) {
-            return min;
-        } else {
-            return tempValue;
-        }
+        return tempValue;
     }
 
     function valueUp() {
         let tempValue = value;
         tempValue += step;
-        tempValue = parseFloat(tempValue.toFixed(fixSize));
-        if (tempValue > max) {
-            value = max;
-            mouseUp();
-        } else {
-            value = tempValue;
-        }
+        setValue(tempValue);
     }
 
     function valueDown() {
         let tempValue = value;
         tempValue -= step;
-        tempValue = parseFloat(tempValue.toFixed(fixSize));
-        if (tempValue < min) {
-            value = min;
-            mouseUp();
-        } else {
-            value = tempValue;
-        }
+        setValue(tempValue);
     }
 
     function mouseDown(act) {
+        dispatch('control', {act});
         clearTimeout(timeout);
         timeout = setTimeout(() => {
             if (act === "+") {
@@ -163,13 +174,18 @@
         </div>
     {/if}
     <div
+        use:events
         class="range-container {localClass} {$$props.class ? $$props.class : ''}">
-    <div class="track{thumb ?"": " none-thumb"}" on:mousedown={thumbCaught}>
-            <div class="progress" style="width: calc({valPercent}% + {thumbHeight / 2 - (thumbHeight * valPercent / 100)}px)" />
+        <div
+            class="track{thumb ? '' : ' none-thumb'}"
+            on:mousedown={thumbCaught}>
+            <div
+                class="progress"
+                style="width: calc({valPercent}% + {thumbHeight / 2 - (thumbHeight * valPercent) / 100}px)" />
             {#if thumb}
                 <div
                     class="thumb"
-                    style="margin-left: {valPercent}%; transform: translate({ -valPercent }% , 0);">
+                    style="margin-left: {valPercent}%; transform: translate({-valPercent}% , 0);">
                     <div />
                 </div>
             {/if}

@@ -3,12 +3,21 @@
     import { clickOutside } from "../../scripts/clickOutside.js";
     import { mdiChevronDown } from "@mdi/js";
     import { randString } from "../../scripts/functions";
+    import { getEventsAction } from "../../scripts/utils.js";
+    import { current_component } from "svelte/internal";
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
+    const events = getEventsAction(current_component);
+
     export let header = "";
     export let items = [];
+
     let chosenItem = undefined;
     let opened = false;
     let selectWidth;
     let localClass;
+
     while (true) {
         let tempClass = "select-" + randString(5);
         if (document.getElementsByClassName(tempClass).length === 0) {
@@ -25,6 +34,7 @@
         }
         let options = document.querySelector(`.${localClass} .options`);
         if (opened) {
+            dispatch('statchange',{"state": "opened", "class": localClass});
             options.style.height = "min-content";
             let height = options.offsetHeight + "px";
             options.style.height = "0px";
@@ -33,12 +43,14 @@
             }, 0);
         } else {
             options.style.height = "0px";
+            dispatch('statchange',{"state": "opened", "class": localClass});
         }
     }
 
     function optionClick(item) {
         chosenItem = item;
         selectArrowClick((close = true));
+        dispatch('change',{item, "class": localClass});
     }
 
     setTimeout(() => {

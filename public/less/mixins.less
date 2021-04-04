@@ -1,16 +1,18 @@
 //main: ../global.less
 
-.neumorphism-background(@concave: "false";
+.neumorphism-background(
+    @blackout: 15%;
+    @lightening: 10%;
+    @concave: "false";
     @convex: "false";
     @background: @background-color;
     @radius: @border-radius;
-
 ) {
     background:
         if(@concave ="true",
-            linear-gradient(145deg, darken(@background, 15%), lighten(@background, 10%)),
+            linear-gradient(145deg, darken(@background, @blackout), lighten(@background, @lightening)),
             if(@convex ="true",
-                linear-gradient(145deg, lighten(@background, 10%), darken(@background, 15%)),
+                linear-gradient(145deg, lighten(@background, @lightening), darken(@background, @blackout)),
                 @background));
     border-radius: @radius;
 }

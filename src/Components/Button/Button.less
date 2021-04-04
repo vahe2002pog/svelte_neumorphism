@@ -4,7 +4,7 @@
 @import "../../../public/less/mixins";
 
 .button {
-    .neumorphism-background;
+    .neumorphism-background(5%, 5%, @convex:"true");
     .pointer;
     .unselectable;
     margin: 5px;
@@ -62,7 +62,7 @@
     }
 
     &:active {
-        .neumorphism-background(@concave: "true", @radius: none);
+        .neumorphism-background(5%, 5%, @concave: "true", @radius: none);
     }
 
     &.right {

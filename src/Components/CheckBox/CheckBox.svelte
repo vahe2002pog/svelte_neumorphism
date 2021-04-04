@@ -7,29 +7,39 @@
     const dispatch = createEventDispatcher();
     const events = getEventsAction(current_component);
 
-    export let active;
-    
+    export let checked;
+    export let right = false;
+
     let localClass;
     while (true) {
-        let tempClass = "switch-" + randString(5);
+        let tempClass = "checkbox-" + randString(5);
         if (document.getElementsByClassName(tempClass).length === 0) {
             localClass = tempClass;
             break;
         }
     }
 
-    function toggle(){
-        active = !active;
-        dispatch('change', {active, "class": localClass});
+    function toggle() {
+        checked = !checked;
+        dispatch("change", { checked, class: localClass });
     }
-
 </script>
 
 <style lang="less" global>
-    @import "Switch.less";
+    @import "CheckBox.less";
 </style>
-<div class="switch {$$props.class ? $$props.class : ''} {localClass}{active ? " active": ""}" use:events on:click={toggle}>
-    <div class="track">
-        <div class="thumb"></div>
+
+<div
+    class="checkbox {$$props.class ? $$props.class : ''}
+        {localClass}{checked ? ' checked' : ''}{right ? ' right' : ''}"
+    use:events
+    on:click={toggle}>
+    <div class="box">
+        <span class="check">
+            &#10004;
+        </span>
+    </div>
+    <div class="text">
+        <slot />
     </div>
 </div>
