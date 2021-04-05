@@ -8,6 +8,7 @@
     const events = getEventsAction(current_component);
 
     export let position = 1;
+    export let style = null;
 
     let localClass;
     while (true) {
@@ -38,7 +39,8 @@
 
 <div
     class="{localClass} {$$props.class ? $$props.class : ''}"
-    use:events>
+    use:events
+    {style}>
     <div class="rounded-1{position === 1 ? ' pressed' : ''}" />
     <div class={position === 2 ? ' pressed' : ''} />
     <div class="rounded-2{position === 3 ? ' pressed' : ''}" />

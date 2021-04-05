@@ -15,6 +15,8 @@
     export let value;
     export let controls = false;
     export let thumb;
+    export let style = null;
+
     let localClass;
     let fixSize;
     let valPercent;
@@ -162,7 +164,7 @@
     @import "RangeSlider.less";
 </style>
 
-<div class="range-block">
+<div class="range-block" {style}>
     {#if controls}
         <div>
             <Button

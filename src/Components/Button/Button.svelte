@@ -2,13 +2,14 @@
     import Icon from "mdi-svelte";
     import { randString } from "../../scripts/functions";
     import { getEventsAction } from "../../scripts/utils.js";
-	import { current_component } from "svelte/internal";
+    import { current_component } from "svelte/internal";
     const events = getEventsAction(current_component);
 
     export let path;
     export let right = false;
     export let size = "normal";
     export let rounded = false;
+    export let style = null;
 
     let iconSizes = {
         "x-large": "32px",
@@ -17,7 +18,7 @@
         small: "20px",
         "x-small": "14px",
     };
-    if(Object.keys(iconSizes).indexOf(size) === -1){
+    if (Object.keys(iconSizes).indexOf(size) === -1) {
         size = normal;
     }
     let slot = false;
@@ -42,7 +43,7 @@
         if ($$props.class) {
             classesArray.push($$props.class);
         }
-        if(rounded){
+        if (rounded) {
             classesArray.push("rounded");
         }
         classesArray.push(size);
@@ -54,7 +55,10 @@
     @import "Button.less";
 </style>
 
-<div class="{localClass} {classes}" use:events>
+<div 
+    class="{localClass} {classes}"
+    use:events
+    {style}>
     {#if path}
         <Icon size={iconSizes[size]} {path} />
     {/if}

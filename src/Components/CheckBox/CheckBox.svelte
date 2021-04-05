@@ -9,6 +9,7 @@
 
     export let checked;
     export let right = false;
+    export let style = null;
 
     let localClass;
     while (true) {
@@ -32,6 +33,7 @@
 <div
     class="{localClass} {$$props.class ? $$props.class : ''}{checked ? ' checked' : ''}{right ? ' right' : ''}"
     use:events
+    {style}
     on:click={toggle}>
     <div class="box">
         <span class="check">

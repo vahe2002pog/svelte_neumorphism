@@ -12,6 +12,7 @@
 
     export let header = "";
     export let items = [];
+    export let style = null;
 
     let chosenItem = undefined;
     let opened = false;
@@ -66,7 +67,7 @@
 </style>
 
 <div>
-    <div class="select-container" style="width: {selectWidth};">
+    <div  class="select-container" style="width: {selectWidth}; {style}">
         <div
             class="{localClass} {$$props.class ? $$props.class : ''}"
             use:clickOutside

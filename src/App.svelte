@@ -5,6 +5,8 @@
     import Switch from "./Components/Switch/Switch.svelte";
     import CheckBox from "./Components/CheckBox/CheckBox.svelte";
     import Position from "./Components/Position/Position.svelte";
+    import File from "./Components/File/File.svelte";
+
     import { mdiInstagram } from "@mdi/js";
 
     let active = true;
@@ -44,6 +46,7 @@
     <Position bind:position/>
     {checked? position : "Позиция не будет показываться"}<br><br>
     <Button path={mdiInstagram} size="normal" right>Instagram</Button>
+    <File></File>
     <input type="text" placeholder="Текстовое поле" style="width:250px">
     <textarea rows="4" style="width:250px" placeholder="Многострочное текстовое поле" ></textarea>
 </main>

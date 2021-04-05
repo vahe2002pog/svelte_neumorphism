@@ -8,7 +8,8 @@
     const events = getEventsAction(current_component);
 
     export let active;
-    
+    export let style = null;
+
     let localClass;
     while (true) {
         let tempClass = "switch-" + randString(5);
@@ -28,7 +29,7 @@
 <style lang="less" global>
     @import "Switch.less";
 </style>
-<div class="{localClass} {$$props.class ? $$props.class : ''}{active ? " active": ""}" use:events on:click={toggle}>
+<div {style} class="{localClass} {$$props.class ? $$props.class : ''}{active ? " active": ""}" use:events on:click={toggle}>
     <div class="track">
         <div class="thumb"></div>
     </div>
