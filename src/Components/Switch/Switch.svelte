@@ -28,7 +28,7 @@
 <style lang="less" global>
     @import "Switch.less";
 </style>
-<div class="switch {$$props.class ? $$props.class : ''} {localClass}{active ? " active": ""}" use:events on:click={toggle}>
+<div class="{localClass} {$$props.class ? $$props.class : ''}{active ? " active": ""}" use:events on:click={toggle}>
     <div class="track">
         <div class="thumb"></div>
     </div>

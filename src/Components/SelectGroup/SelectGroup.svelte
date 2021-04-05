@@ -68,7 +68,7 @@
 <div>
     <div class="select-container" style="width: {selectWidth};">
         <div
-            class="select {localClass} {$$props.class ? $$props.class : ''}"
+            class="{localClass} {$$props.class ? $$props.class : ''}"
             use:clickOutside
             on:click_outside={opened ? (e) => selectArrowClick((e, true)) : () => {}}>
             <div class="header">

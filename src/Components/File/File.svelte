@@ -7,38 +7,27 @@
     const dispatch = createEventDispatcher();
     const events = getEventsAction(current_component);
 
-    export let checked;
-    export let right = false;
-
+    export let active;
+    
     let localClass;
     while (true) {
-        let tempClass = "checkbox-" + randString(5);
+        let tempClass = "file-" + randString(5);
         if (document.getElementsByClassName(tempClass).length === 0) {
             localClass = tempClass;
             break;
         }
     }
 
-    function toggle() {
-        checked = !checked;
-        dispatch("change", { checked, class: localClass });
+    function toggle(){
+        active = !active;
+        dispatch('change', {active, "class": localClass});
     }
+
 </script>
 
 <style lang="less" global>
-    @import "CheckBox.less";
+    @import "File.less";
 </style>
-
-<div
-    class="{localClass} {$$props.class ? $$props.class : ''}{checked ? ' checked' : ''}{right ? ' right' : ''}"
-    use:events
-    on:click={toggle}>
-    <div class="box">
-        <span class="check">
-            &#10004;
-        </span>
-    </div>
-    <div class="text">
-        <slot />
-    </div>
+<div class="{$$props.class ? $$props.class : ''} {localClass}" use:events>
+    <input type="file">
 </div>

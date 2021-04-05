@@ -37,7 +37,7 @@
 </style>
 
 <div
-    class="position {$$props.class ? $$props.class : ''} {localClass}"
+    class="{localClass} {$$props.class ? $$props.class : ''}"
     use:events>
     <div class="rounded-1{position === 1 ? ' pressed' : ''}" />
     <div class={position === 2 ? ' pressed' : ''} />

@@ -54,7 +54,7 @@
     @import "Button.less";
 </style>
 
-<div class="button {localClass} {classes}" use:events>
+<div class="{localClass} {classes}" use:events>
     {#if path}
         <Icon size={iconSizes[size]} {path} />
     {/if}
