@@ -7,7 +7,7 @@
     import Position from "./Components/Position/Position.svelte";
     import File from "./Components/File/File.svelte";
 
-    import { mdiInstagram } from "@mdi/js";
+    import { mdiYoutube } from "@mdi/js";
 
     let active = true;
     let checked = false;
@@ -25,6 +25,11 @@
             groupURL: "https://www.reddit.com/",
         },
     ];
+
+    function buttonClick(){
+        window.open("https://youtube.com");
+    }
+
 </script>
 
 <style lang="less">
@@ -45,7 +50,7 @@
     <CheckBox bind:checked> Показать позицию </CheckBox>
     <Position bind:position/>
     {checked? position : "Позиция не будет показываться"}<br><br>
-    <Button path={mdiInstagram} size="normal" right>Instagram</Button>
+    <Button path={mdiYoutube} size="normal" on:click={buttonClick} right>Youtube</Button>
     <File></File>
     <input type="text" placeholder="Текстовое поле" style="width:250px">
     <textarea rows="4" style="width:250px" placeholder="Многострочное текстовое поле" ></textarea>
