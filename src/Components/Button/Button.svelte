@@ -5,7 +5,7 @@
     import { current_component } from "svelte/internal";
     const events = getEventsAction(current_component);
 
-    export let path;
+    export let path = null;
     export let right = false;
     export let size = "normal";
     export let rounded = false;

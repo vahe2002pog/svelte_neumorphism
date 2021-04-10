@@ -4,8 +4,8 @@
 @import "../../../public/less/mixins";
 
 [class*="file-"] {
-    max-width: 250px;
-    width: 250px;
+    max-width: 275px;
+    width: 275px;
     height: 100%;
     display: flex;
     margin: 10px;
@@ -17,18 +17,15 @@
     & .field {
         .neumorphism-background;
         .neumorphism-shadow-inset;
-        margin-left: -10px;
-        border-radius: 0 36px 36px 0;
-        max-width: 150px;
-        width: 150px;
         .neumorphism-border;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        max-width: 275px;
+        width: 275px;
 
         & div {
-            margin-left: 15px;
-            margin-right: 5px;
+            flex: 1;
+            text-align: center;
+            margin: auto 5px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;

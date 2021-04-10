@@ -2,8 +2,10 @@
  * @params {array} files List of file items
  * @return FileList
  */
- function FileListItems(files) {
-    var b = new ClipboardEvent("").clipboardData || new DataTransfer()
-    for (var i = 0, len = files.length; i < len; i++) b.items.add(files[i])
-    return b.files
+export function FileListItems(files) {
+    let data = new ClipboardEvent("").clipboardData || new DataTransfer()
+    for (var i = 0, len = files.length; i < len; i++) {
+        data.items.add(files[i]);
+    }
+    return data.files
 }
