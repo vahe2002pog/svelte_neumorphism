@@ -51,7 +51,8 @@
     <Position bind:position/>
     {checked? position : "Позиция не будет показываться"}<br><br>
     <Button path={mdiYoutube} size="normal" on:click={buttonClick} right>Youtube</Button>
-    <File multiple accept="image/*, .pdf"/>
+    <File mini accept="image/*, .pdf"/>
+    <File multiple buttonTitle="Открыть файл" fieldTitle="или перетащите файл сюда" accept="image/*, .pdf" style="width: 400px; height: 275px;"/>
     <input type="text" placeholder="Текстовое поле" style="width:250px">
     <textarea rows="4" style="width:250px" placeholder="Многострочное текстовое поле" ></textarea>
 </main>

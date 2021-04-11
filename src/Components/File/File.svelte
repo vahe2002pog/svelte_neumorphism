@@ -1,4 +1,5 @@
 <script>
+    import Icon from "mdi-svelte";
     import { randString } from "../../scripts/functions";
     import { FileListItems } from "../../scripts/FileListItems";
     import { isValid } from "../../scripts/FileValidate";
@@ -6,18 +7,24 @@
     import { current_component } from "svelte/internal";
     import { createEventDispatcher } from "svelte";
     import Button from "../Button/Button.svelte";
+    // import { mdiTrayArrowDown } from "@mdi/js";
 
     const dispatch = createEventDispatcher();
     const events = getEventsAction(current_component);
 
     export let buttonTitle = "Открыть";
-    export let fieldTitle = "Выберите файл";
+    export let fieldTitle = "Файл не выбран";
     export let multiple = false;
     export let style = null;
     export let files = null;
     export let accept = "*.*";
-
+    export let mini = false;
+    let title = "Файл не выбран";
+    let canDrop = false;
     let localClass;
+    let mdiTrayArrowDown = "M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 15L17.55 9.54L16.13 8.13L13 11.25V2H11V11.25L7.88 8.13L6.46 9.55L12 15Z";
+
+
     while (true) {
         let tempClass = "file-" + randString(5);
         if (document.getElementsByClassName(tempClass).length === 0) {
@@ -46,9 +53,10 @@
         e.preventDefault();
         let items = Object.values(e?.dataTransfer?.items);
         files = new FileListItems(getFiles(items));
+        changeEvent();
         setTitle();
     }
-    
+
     function dragOverHandler(e) {
         e.preventDefault();
         let items = Object.values(e?.dataTransfer?.items);
@@ -59,19 +67,31 @@
             e.stopPropagation();
         }
     }
-    
+
     function fileInputChange(e) {
         files = e.target.files;
+        changeEvent();
         setTitle();
     }
 
-    function setTitle(){
-        if(multiple){
+    function setTitle() {
+        if (multiple) {
             fieldTitle = "Выбрано файлов: " + files.length;
-        }
-        else{
+        } else {
             fieldTitle = files[0].name;
         }
+        setNames();
+    }
+
+    function setNames() {
+        title = "";
+        for (let i = 0; i < files.length; i++) {
+            title += files[i].name + "\n";
+        }
+    }
+
+    function changeEvent() {
+        dispatch("change", { files, class: localClass });
     }
 </script>
 
@@ -81,7 +101,7 @@
 
 <div
     {style}
-    class="{$$props.class ? $$props.class : ''} {localClass}"
+    class="{$$props.class ? $$props.class : ''} {localClass}{mini ? ' mini' : ' big'}{canDrop ? ' drop' : ''}"
     use:events>
     <input
         id={localClass}
@@ -89,13 +109,22 @@
         type="file"
         {accept}
         on:change={fileInputChange} />
-    <div class="field" on:dragover={dragOverHandler} on:drop={dropHandler}>
+    <div
+        class="field"
+        on:dragover={dragOverHandler}
+        {title}
+        on:drop={dropHandler}>
         <label for={localClass} style="z-index: 1;">
             <Button
-                style="border-top-left-radius: 36px; border-bottom-left-radius: 36px; margin: 0; flex:1;">
+                style={mini ? 'border-top-left-radius: 36px; border-bottom-left-radius: 36px; margin: 0;' : ''}>
                 {buttonTitle}
             </Button>
         </label>
-        <div>{fieldTitle}</div>
+        <div class="field-title">
+            {#if !mini}
+                <Icon path={mdiTrayArrowDown} />
+            {/if}
+            {fieldTitle}
+        </div>
     </div>
 </div>

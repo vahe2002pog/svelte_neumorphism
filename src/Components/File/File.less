@@ -4,32 +4,59 @@
 @import "../../../public/less/mixins";
 
 [class*="file-"] {
-    max-width: 275px;
-    width: 275px;
-    height: 100%;
-    display: flex;
-    margin: 10px;
-
     & input[type="file"] {
         display: none;
     }
-
-    & .field {
-        .neumorphism-background;
-        .neumorphism-shadow-inset;
-        .neumorphism-border;
+    .unselectable;
+    &.big{
+        width: 100%;
+        height: 100%;
         display: flex;
+        margin: 10px;
+    
+        & .field {
+            .neumorphism-background;
+            .neumorphism-shadow-inset;
+            .neumorphism-border;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+
+            & .field-title {
+                text-align: center;
+                margin: 5px;
+                font-size: small;
+            }
+        }
+    }
+
+    &.mini{
         max-width: 275px;
         width: 275px;
-
-        & div {
-            flex: 1;
-            text-align: center;
-            margin: auto 5px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            font-size: small;
+        height: 100%;
+        display: flex;
+        margin: 10px;
+    
+        & .field {
+            .neumorphism-background;
+            .neumorphism-shadow-inset;
+            .neumorphism-border;
+            display: flex;
+            max-width: 275px;
+            width: 275px;
+    
+            & .field-title {
+                flex: 1;
+                text-align: center;
+                margin: auto 5px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: small;
+            }
         }
     }
 }
