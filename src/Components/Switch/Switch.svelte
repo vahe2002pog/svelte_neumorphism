@@ -9,6 +9,7 @@
 
     export let active;
     export let style = null;
+    export let disabled = false;
 
     let localClass;
     while (true) {
@@ -29,7 +30,7 @@
 <style lang="less" global>
     @import "Switch.less";
 </style>
-<div {style} class="{localClass} {$$props.class ? $$props.class : ''}{active ? " active": ""}" use:events on:click={toggle}>
+<div {style} class="{localClass} {$$props.class ? $$props.class : ''}{active ? " active": ""}{disabled ? ' disabled' : ''}" use:events on:click={toggle}>
     <div class="track">
         <div class="thumb"></div>
     </div>

@@ -16,6 +16,7 @@
     export let controls = false;
     export let thumb;
     export let style = null;
+    export let disabled = false;
 
     let localClass;
     let fixSize;
@@ -164,7 +165,7 @@
     @import "RangeSlider.less";
 </style>
 
-<div class="range-block" {style}>
+<div class="range-block{disabled ? ' disabled' : ''}" {style}>
     {#if controls}
         <div>
             <Button

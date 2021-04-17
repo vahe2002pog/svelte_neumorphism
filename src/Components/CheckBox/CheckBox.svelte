@@ -10,6 +10,7 @@
     export let checked;
     export let right = false;
     export let style = null;
+    export let disabled = false;
 
     let localClass;
     while (true) {
@@ -31,7 +32,7 @@
 </style>
 
 <div
-    class="{localClass} {$$props.class ? $$props.class : ''}{checked ? ' checked' : ''}{right ? ' right' : ''}"
+    class="{localClass} {$$props.class ? $$props.class : ''}{checked ? ' checked' : ''}{right ? ' right' : ''}{disabled ? ' disabled' : ''}"
     use:events
     {style}
     on:click={toggle}>

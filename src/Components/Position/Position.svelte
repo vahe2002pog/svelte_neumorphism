@@ -9,6 +9,7 @@
 
     export let position = 1;
     export let style = null;
+    export let disabled = false;
 
     let localClass;
     while (true) {
@@ -38,7 +39,7 @@
 </style>
 
 <div
-    class="{localClass} {$$props.class ? $$props.class : ''}"
+    class="{localClass} {$$props.class ? $$props.class : ''}{disabled ? ' disabled' : ''}"
     use:events
     {style}>
     <div class="rounded-1{position === 1 ? ' pressed' : ''}" />

@@ -19,11 +19,13 @@
     export let files = null;
     export let accept = "*.*";
     export let mini = false;
+    export let disabled = false;
     let title = "Файл не выбран";
     let canDrop = false;
     let localClass;
-    let mdiTrayArrowDown = "M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 15L17.55 9.54L16.13 8.13L13 11.25V2H11V11.25L7.88 8.13L6.46 9.55L12 15Z";
-
+    let counter = 0;
+    let mdiTrayArrowDown =
+        "M2 12H4V17H20V12H22V17C22 18.11 21.11 19 20 19H4C2.9 19 2 18.11 2 17V12M12 15L17.55 9.54L16.13 8.13L13 11.25V2H11V11.25L7.88 8.13L6.46 9.55L12 15Z";
 
     while (true) {
         let tempClass = "file-" + randString(5);
@@ -54,7 +56,16 @@
         let items = Object.values(e?.dataTransfer?.items);
         files = new FileListItems(getFiles(items));
         changeEvent();
+        canDrop = false;
         setTitle();
+    }
+
+    function dragLeaveHandler(e) {
+        counter--;
+        if(counter === 0){
+            canDrop = false;
+            console.log(e);
+        }
     }
 
     function dragOverHandler(e) {
@@ -62,8 +73,10 @@
         let items = Object.values(e?.dataTransfer?.items);
         if (getFiles(items).length > 0) {
             e.dataTransfer.dropEffect = "move";
+            canDrop = true;
         } else {
             e.dataTransfer.dropEffect = "none";
+            canDrop = false;
             e.stopPropagation();
         }
     }
@@ -90,6 +103,10 @@
         }
     }
 
+    function dragEnterHandler(){
+        counter++;
+    }
+
     function changeEvent() {
         dispatch("change", { files, class: localClass });
     }
@@ -101,7 +118,7 @@
 
 <div
     {style}
-    class="{$$props.class ? $$props.class : ''} {localClass}{mini ? ' mini' : ' big'}{canDrop ? ' drop' : ''}"
+    class="{$$props.class ? $$props.class : ''} {localClass}{mini ? ' mini' : ' big'}{canDrop ? ' drop' : ''}{disabled ? ' disabled' : ''}"
     use:events>
     <input
         id={localClass}
@@ -113,8 +130,10 @@
         class="field"
         on:dragover={dragOverHandler}
         {title}
-        on:drop={dropHandler}>
-        <label for={localClass} style="z-index: 1;">
+        on:drop={dropHandler}
+        on:dragenter={dragEnterHandler}
+        on:dragleave={dragLeaveHandler}>
+        <label for={localClass} style="z-index: 1;" class="label">
             <Button
                 style={mini ? 'border-top-left-radius: 36px; border-bottom-left-radius: 36px; margin: 0;' : ''}>
                 {buttonTitle}
@@ -124,7 +143,12 @@
             {#if !mini}
                 <Icon path={mdiTrayArrowDown} />
             {/if}
-            {fieldTitle}
+            <div class="text">{fieldTitle}</div>
         </div>
+        {#if !mini}
+            <div class="icon">
+                <Icon path={mdiTrayArrowDown} />
+            </div>
+        {/if}
     </div>
 </div>

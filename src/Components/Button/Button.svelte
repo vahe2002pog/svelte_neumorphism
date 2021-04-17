@@ -10,6 +10,7 @@
     export let size = "normal";
     export let rounded = false;
     export let style = null;
+    export let disabled = false;
 
     let iconSizes = {
         "x-large": "32px",
@@ -46,6 +47,9 @@
         if (rounded) {
             classesArray.push("rounded");
         }
+        if (disabled) {
+            classesArray.push("disabled");
+        }
         classesArray.push(size);
         classes = classesArray.join(" ").trim();
     }
@@ -55,10 +59,7 @@
     @import "Button.less";
 </style>
 
-<div 
-    class="{localClass} {classes}"
-    use:events
-    {style}>
+<div class="{localClass} {classes}" use:events {style}>
     {#if path}
         <Icon size={iconSizes[size]} {path} />
     {/if}
