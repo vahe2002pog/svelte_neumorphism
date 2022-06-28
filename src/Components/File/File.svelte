@@ -54,6 +54,7 @@
     function dropHandler(e) {
         e.preventDefault();
         let items = Object.values(e?.dataTransfer?.items);
+        console.log(items);
         files = new FileListItems(getFiles(items));
         changeEvent();
         canDrop = false;
@@ -82,7 +83,13 @@
     }
 
     function fileInputChange(e) {
-        files = e.target.files;
+        let tempFiles = [];
+        e.target.files.forEach(file => {
+            if (isValid(accept, file.type)){
+                tempFiles.push(file);
+            }
+        });
+        files =  new FileListItems(tempFiles);
         changeEvent();
         setTitle();
     }
