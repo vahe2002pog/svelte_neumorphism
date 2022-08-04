@@ -59,5 +59,5 @@
     <RangeSlider thumb controls bind:value={indets[0]} min="0" max="50" step="0.1" />
     <RangeSlider thumb controls bind:value={indets[1]} min="0" max="50" step="0.1" />
     ({indets[0]} - {indets[1]})
-    <PreviewBox path={mdiVideo} size={value} {indets} {position} src=".\src\logo.png" style="width:250px"/>
+    <PreviewBox path={mdiVideo} size={value} {indets} {position} src=".\src\logo.png" vertical style="width:250px"/>
 </main>

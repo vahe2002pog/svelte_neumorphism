@@ -13,9 +13,13 @@
     align-items: center;
     font-weight: bold;
     width: 100%;
-    aspect-ratio: 16/9;
     border-radius: 3px;
     overflow: hidden;
+    aspect-ratio: 16/9;
+
+    &.vertical{
+        aspect-ratio: 9/16;
+    }
 
     & .icon {
         position: absolute;

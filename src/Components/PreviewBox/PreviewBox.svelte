@@ -14,6 +14,7 @@
     export let indets = [1, 1];
     export let position = 5;
     export let opacity = 50;
+    export let vertical = false;
     let flexParams = ["start", "center", "end"];
     let watermarkBlockStyle;
     let watermarkStyle;
@@ -41,6 +42,9 @@
         }
         if (disabled) {
             classesArray.push("disabled");
+        }
+        if (vertical) {
+            classesArray.push("vertical");
         }
         classes = classesArray.join(" ").trim();
     }
